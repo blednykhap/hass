@@ -1,0 +1,101 @@
+default_config:
+my:
+mobile_app:
+
+homeassistant:
+  name: Home
+  latitude: !secret home_latitude
+  longitude: !secret home_longitude
+  elevation: !secret home_elevation
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  time_zone: !secret home_timezone
+
+#hardware:
+
+# Load frontend themes from the themes folder
+frontend:
+  themes: !include_dir_merge_named themes
+
+zone:
+  - name: School
+    latitude: !secret school_latitude
+    longitude: !secret school_longitude
+    radius: 114
+    icon: mdi:school
+  - name: Home
+    latitude: !secret home_latitude
+    longitude: !secret home_longitude
+    radius: 114
+    icon: mdi:account-multiple
+
+device_tracker:
+  - platform: ping
+    hosts:
+      andrey_mobile_ping: !secret host_mobile_andrey
+      natali_mobile_ping: !secret host_mobile_natali
+      kirill_mobile_ping: !secret host_mobile_kirill
+      kosty_mobile_ping:  !secret host_mobile_kosty
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+sensor:
+  - platform: time_date
+    display_options:
+      - 'time'
+      - 'date'
+      - 'date_time'
+      - 'date_time_utc'
+      - 'date_time_iso'
+      - 'time_date'
+      - 'time_utc'
+      - 'beat'
+
+  - platform: systemmonitor
+    resources:
+      - type: disk_use_percent
+        arg: /config
+      - type: disk_use
+      - type: disk_free
+      - type: memory_use_percent
+      - type: memory_use
+      - type: memory_free
+      - type: swap_use_percent
+      - type: swap_use
+      - type: swap_free
+      - type: load_1m
+      - type: load_5m
+      - type: load_15m
+      - type: network_in
+        arg: eth0
+      - type: network_out
+        arg: eth0
+      - type: throughput_network_in
+        arg: eth0
+      - type: throughput_network_out
+        arg: eth0
+      - type: packets_in
+        arg: eth0
+      - type: packets_out
+        arg: eth0
+      - type: ipv4_address
+        arg: eth0
+      - type: ipv6_address
+        arg: eth0
+      - type: processor_use
+      - type: processor_temperature
+      - type: last_boot        
+
+#type: map
+#title: Locatie Myself
+#entities:
+#  - entity: person.andrey
+#hours_to_show: 12
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+group: !include groups.yaml
+
