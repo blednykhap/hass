@@ -21,9 +21,12 @@ sudo docker run -d \
   --privileged \
   -e TZ=Asia/Yekaterinburg \
   -v /opt/hass/config:/config \
+  -v /dev/serial/by-id:/dev/serial/by-id \
   --network=host \
   ghcr.io/home-assistant/home-assistant:stable
 
 sudo docker exec -it homeassistant bash
 
 sudo docker restart homeassistant
+
+exit from container: ctrl+c ctrl+d
